@@ -20,8 +20,14 @@ services:
     image: grafana/grafana:latest
     volumes: 
       - grafana_data:/var/lib/grafana
+      # เพิ่ม volumes สำหรับ dashboard และ datasource
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
+      # เพิ่มการตั้งค่าให้แสดงผลโดยไม่ต้อง login
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
     depends_on:
       - prometheus
     ports:
