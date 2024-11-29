@@ -1,0 +1,21 @@
+global:
+  external_labels:
+    monitor: test-monitor
+  scrape_interval: 5s
+  evaluation_interval: 15s    # เพิ่มส่วนนี้เพื่อกำหนดความถี่ในการประเมิน rules
+
+# แยก rules ออกมาเป็นส่วนของตัวเอง
+rule_files:
+  - "rules.yml"    # บอก Prometheus ว่าจะมีไฟล์ rules แยกต่างหาก
+
+# คงส่วนของ scrape_configs ไว้เหมือนเดิม
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets:
+          - "localhost:9090"
+  
+  - job_name: node-exporter
+    static_configs:
+      - targets:
+          - "node-exporter:9100"
